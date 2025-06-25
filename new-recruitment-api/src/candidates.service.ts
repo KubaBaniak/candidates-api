@@ -31,6 +31,8 @@ export class CandidatesService {
   }
 
   getAllCandidates() {
-    const allCandidates = this.candidateRepo.delete;
+    return this.candidateRepo.find({
+      relations: ["jobOffers"],
+    });
   }
 }

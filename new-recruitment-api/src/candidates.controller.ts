@@ -11,10 +11,15 @@ export class CandidatesController {
     this.router.post("/candidates", this.create.bind(this));
   }
 
-  getAll(req: Request, res: Response) {
-    console.log(x);
-    var x = 1;
-    res.json([]);
+  async getAll(req: Request, res: Response) {
+    try {
+      const allCandidates = await this.candidateService.getAllCandidates();
+      console.log(allCandidates);
+      res.json(allCandidates);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Error while retreaving candidates" });
+    }
   }
 
   async create(req: Request, res: Response) {

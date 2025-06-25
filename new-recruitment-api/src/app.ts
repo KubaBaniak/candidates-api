@@ -1,12 +1,15 @@
 import express from "express";
 import { CandidatesController } from "./candidates.controller";
+import { AppDataSource } from "./data-source";
 
 export const setupApp = async () => {
-    const app = express();
+  await AppDataSource.initialize();
 
-    app.use(express.json());
+  const app = express();
 
-    app.use(new CandidatesController().router);
+  app.use(express.json());
 
-    return app;
-}
+  app.use(new CandidatesController().router);
+
+  return app;
+};

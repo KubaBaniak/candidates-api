@@ -12,9 +12,11 @@
   "author": "MasterBorn",
   "license": "ISC",
   "dependencies": {
+    "class-validator": "^0.14.2",
     "express": "^5.0.1",
     "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "typeorm": "^0.3.25"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",

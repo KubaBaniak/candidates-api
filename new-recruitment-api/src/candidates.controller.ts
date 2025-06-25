@@ -12,12 +12,18 @@ export class CandidatesController {
   }
 
   async getAll(req: Request, res: Response) {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+
     try {
-      const allCandidates = await this.candidateService.getAllCandidates();
-      res.json(allCandidates);
+      const paginatedCandidates = await this.candidateService.getAllCandidates(
+        page,
+        limit,
+      );
+      res.json(paginatedCandidates);
     } catch (err) {
       console.error(err);
-      res.status(500).json({ error: "Error while retreaving candidates" });
+      res.status(500).json({ error: "Failed to fetch candidates" });
     }
   }
 

@@ -43,9 +43,23 @@ export class CandidatesService {
     return this.candidateRepo.save(candidate);
   }
 
-  getAllCandidates() {
-    return this.candidateRepo.find({
+  async getAllCandidates(page: number = 1, limit: number = 10) {
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await this.candidateRepo.findAndCount({
       relations: ["jobOffers"],
+      skip,
+      take: limit,
+      order: {
+        applicationDate: "DESC",
+      },
     });
+
+    return {
+      data,
+      total,
+      page,
+      pageCount: Math.ceil(total / limit),
+    };
   }
 }

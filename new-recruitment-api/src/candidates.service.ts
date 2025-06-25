@@ -20,6 +20,10 @@ export class CandidatesService {
       return false;
     }
 
+    if (!/\S+@\S+\.\S+/.test(candidate.email)) {
+      return false;
+    }
+
     if (!candidate.jobOfferIds || !(candidate.jobOfferIds.length > 0)) {
       return false;
     }

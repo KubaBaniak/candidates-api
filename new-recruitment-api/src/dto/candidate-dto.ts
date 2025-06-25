@@ -6,12 +6,12 @@ export enum RecruitmentStage {
 }
 
 export class CandidateDTO {
-  name: string;
-  surname: string;
+  firstName: string;
+  lastName: string;
   email: string;
   phoneNumber: string;
-  experience: number;
-  additionalNotes: string;
-  stage: RecruitmentStage;
+  experienceYears: number;
+  notes: string;
+  status: RecruitmentStage;
   applicationDate: Date;
 }

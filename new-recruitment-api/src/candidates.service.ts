@@ -3,6 +3,7 @@ import { AppDataSource } from "./data-source";
 import { CandidateDTO } from "./dto/candidate-dto";
 import { Candidate } from "./entities/Candidate";
 import { JobOffer } from "./entities/JobOffer";
+import axios from "axios";
 
 export class CandidatesService {
   private readonly candidateRepo = AppDataSource.getRepository(Candidate);
@@ -61,5 +62,30 @@ export class CandidatesService {
       page,
       pageCount: Math.ceil(total / limit),
     };
+  }
+
+  async sendDataToLegacyAPI(data: {
+    firstName: string;
+    lastName: string;
+    email: string;
+  }) {
+    try {
+      await axios.post(
+        process.env.LEGACY_API_URL,
+        {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+        },
+        {
+          headers: {
+            "x-api-key": process.env.LEGACY_API_KEY,
+          },
+        },
+      );
+      console.log("Candidate synced with legacy API");
+    } catch (err) {
+      console.warn("Failed to sync with legacy API:", err.message);
+    }
   }
 }

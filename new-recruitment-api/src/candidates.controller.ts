@@ -39,6 +39,12 @@ export class CandidatesController {
         createCandidateRequest,
       );
 
+      await this.candidateService.sendDataToLegacyAPI({
+        firstName: result.firstName,
+        lastName: result.lastName,
+        email: result.email,
+      });
+
       res.status(201).json(result);
     } catch (err) {
       console.error(err);

@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { JobOffer } from "./entities/JobOffer";
 import { Candidate } from "./entities/Candidate";

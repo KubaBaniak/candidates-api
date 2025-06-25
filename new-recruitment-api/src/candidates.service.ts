@@ -1,9 +1,12 @@
+import { In } from "typeorm";
 import { AppDataSource } from "./data-source";
 import { CandidateDTO } from "./dto/candidate-dto";
 import { Candidate } from "./entities/Candidate";
+import { JobOffer } from "./entities/JobOffer";
 
 export class CandidatesService {
   private readonly candidateRepo = AppDataSource.getRepository(Candidate);
+  private readonly jobOfferRepo = AppDataSource.getRepository(JobOffer);
 
   isCreateRequestValid(candidate: CandidateDTO): boolean {
     if (
@@ -13,18 +16,28 @@ export class CandidatesService {
       !candidate.phoneNumber ||
       !candidate.experienceYears
     ) {
-      console.error("invalid");
+      return false;
+    }
+
+    if (!candidate.jobOfferIds || !(candidate.jobOfferIds.length > 0)) {
       return false;
     }
 
     return true;
   }
 
-  createCandidate(candidateData: CandidateDTO) {
+  async createCandidate(candidateData: CandidateDTO) {
+    let jobOffers: JobOffer[] = [];
+
+    jobOffers = await AppDataSource.getRepository(JobOffer).find({
+      where: { id: In(candidateData.jobOfferIds) },
+    });
+
     const candidate = this.candidateRepo.create({
       ...candidateData,
       status: "nowy",
       applicationDate: Date.now(),
+      jobOffers: jobOffers,
     });
 
     return this.candidateRepo.save(candidate);

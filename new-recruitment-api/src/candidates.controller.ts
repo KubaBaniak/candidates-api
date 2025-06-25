@@ -14,7 +14,6 @@ export class CandidatesController {
   async getAll(req: Request, res: Response) {
     try {
       const allCandidates = await this.candidateService.getAllCandidates();
-      console.log(allCandidates);
       res.json(allCandidates);
     } catch (err) {
       console.error(err);
@@ -30,7 +29,6 @@ export class CandidatesController {
         return res.status(400).json({ error: "Invalid data." });
       }
 
-      console.log("tu");
       const result = await this.candidateService.createCandidate(
         createCandidateRequest,
       );

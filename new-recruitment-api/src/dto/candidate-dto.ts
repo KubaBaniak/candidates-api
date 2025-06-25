@@ -14,4 +14,5 @@ export class CandidateDTO {
   notes: string;
   status: RecruitmentStage;
   applicationDate: Date;
+  jobOfferIds: number[];
 }
